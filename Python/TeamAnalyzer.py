@@ -27,8 +27,22 @@ for i, arg in enumerate(sys.argv):
         print("Analyzing", i)
         c.execute("SELECT * FROM pokemon WHERE pokedex_number = ?", (arg,))
         pokemon_info = c.fetchone()
-        # Finds and sets the pokemon id value
-        pokemon_name = pokemon_info[2]
+
+        # Checks if the arg returned anything
+            # if so, the arg is assumed to be a pokedex_number
+            # if not, the arg can either be a name or invalid
+                # continue if it is a proper Pokemon name (spelling + capitalization)
+                # exit and print a message if it is invalid
+        if pokemon_info is not None:
+            pokemon_name = pokemon_info[2]
+        else:
+            c.execute("SELECT * FROM pokemon WHERE name = ?", (arg,))
+            pokemon_info = c.fetchone()
+            if pokemon_info is not None:
+                pokemon_name = arg
+            else: # if both int and str result in None, it is not a valid pokedex number or pokemon name
+                print("Please enter valid Pokedex numbers or properly spelled and capitalized Pokemon names!")
+                sys.exit()
 
         # Finds and sets the types for the given pokemon
         c.execute("SELECT * FROM pokemon_types_view WHERE name = ?", (pokemon_name,))
