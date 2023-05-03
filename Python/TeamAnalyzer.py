@@ -22,7 +22,7 @@ for i, arg in enumerate(sys.argv):
     if i == 0:
         continue
     else:
-        strong_against =[]
+        strong_against = [] # Creates empty lists to add strong and weak types to
         weak_against = []
         print("Analyzing", i)
         c.execute("SELECT * FROM pokemon WHERE pokedex_number = ?", (arg,))
@@ -66,14 +66,7 @@ for i, arg in enumerate(sys.argv):
             
         print(pokemon_name, "(" + type_1, type_2 + ") is strong against", strong_against, "but weak against", weak_against)
 
-        
-    # Analyze the pokemon whose pokedex_number is in "arg"
-
-    # You will need to write the SQL, extract the results, and compare
-    # Remember to look at those "against_NNN" column values; greater than 1
-    # means the Pokemon is strong against that type, and less than 1 means
-    # the Pokemon is weak against that type
-
+# Provided code
 answer = input("Would you like to save this team? (Y)es or (N)o: ")
 if answer.upper() == "Y" or answer.upper() == "YES":
     teamName = input("Enter the team name: ")
